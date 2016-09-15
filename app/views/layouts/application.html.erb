@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>FilePlace</title>
+    <%= csrf_meta_tags %>
+    <%= stylesheet_link_tag    'application', media: 'all' %>
+    <%= javascript_include_tag 'application' %>
+    <script type="text/javascript" src="//api.filestackapi.com/filestack.js"></script>
+  </head>
+
+  <body>
+
+      <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
+
+         <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/users">Fileplace</a>
+          </div>
+
+          <!-- Collect the nav links, forms, and other content for toggling -->
+          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+              <li><%= link_to "Create Profile", new_user_path %></li>
+            </ul>
+          </div>
+
+
+
+        </div><!-- container-fluid -->
+      </nav>
+
+    <div class="container">
+    <br>
+    <br>
+    <br>
+      <%= yield %>
+    </div>
+
+  </body>
+
+
+</html>
+
+

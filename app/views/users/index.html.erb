@@ -1,0 +1,63 @@
+<div class="row">
+<br>
+    <% @users.each do |user| %>
+        <div class="col-md-4">
+                <div class="well well-sm" style="min-height:250px;">
+                    <div class="media">
+                        <a class="thumbnail pull-left" href="#">
+                            <%= image_tag(user.avatar, class: "media-object", height: '80', width: '80') %>
+                        </a>
+                        <br>
+                        <div class="media-body">
+                            <h4 class="media-heading"><%= user.name %></h4>
+                            <p style="margin-top:5px;"><%= user.description %></p>
+                            <hr>
+                            <i><p style="text-align: center;">Uploaded Files:</p></i>
+                            <p style="text-align:center;">
+                            <% user.file.each do |f| %>
+                                <%= link_to '#', :onclick => "get_metadata('#{f}')", class: "btn btn-xs btn-info", style: "margin-top:5px;" do %>
+                                    <span class="glyphicon glyphicon-file"></span>Download
+                                <% end %>
+                            <% end %>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <% end %>
+
+  </div>
+</div>
+
+<script type="text/javascript">
+var file_key = "APIE3o0WoRzuxrCnSLv5rz";
+
+function get_metadata(url) {
+
+    $.get( url + "/metadata", function( data ) {
+        get_file(data.filename,data.mimetype,data.isWriteable,data.size, url);
+    });
+
+}
+
+
+function get_file(filename, mimetype, isWriteable, size, url) {
+    
+    filepicker.setKey(file_key);
+    var blob = {
+      url: url,
+      filename: filename,
+      mimetype: mimetype,
+      isWriteable: isWriteable,
+      size: size
+    };     
+
+    filepicker.exportFile(
+      blob,
+      function(Blob){
+        console.log(Blob.url);
+      }
+    );
+
+}
+</script>

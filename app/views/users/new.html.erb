@@ -1,0 +1,91 @@
+<div class="row">
+	<%= form_for(@user) do |f| %>
+	        
+	        <div class="card card-container">
+		            
+		            <%= link_to "#" do %>
+		            	<img id="profile-img" class="profile-img-card" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" onclick="avatar(event);"/>
+		            <% end %>
+
+	                <div id="my_form" class="form-group">
+	                	<div style="margin:auto;text-align: center;">
+	                		<span class="label label-info">Name</span>
+	                	</div>
+	                	<p></p>
+	                	<%= f.text_field :name, class: "form-control" %>
+	                	<%= f.hidden_field :avatar, id: "hidden_input_avatar" %>
+	                	<hr>
+	                	<div style="margin:auto;text-align: center;">
+	                		<span class="label label-info">Description</span>
+	                	</div>
+	                	<p></p>
+	                	<%= f.text_area :description, class: "form-control" %>
+	                	<hr>
+	                	<div style="margin:auto;text-align: center;">
+	                		<span class="label label-info">Files</span>
+	                	</div>
+	                	<p></p>
+	                	<button class="btn btn-info btn-block" type="button" onclick="files(event);"><span class="fa fa-user"></span>Upload Files</button>
+	                	<p></p>
+	                	<%= f.hidden_field :files, id: "hidden_input_files" %>
+	                </div>
+
+	                <div class="form-group text-xs-center">
+	                	<button class="btn btn-primary btn-block" id="my_submit" type="submit">Create User</button>
+	                </div>
+	                
+	            
+	        </div><!-- /card-container -->
+
+    <% end %>
+</div>
+
+
+
+
+<script type="text/javascript">
+var file_key = "APIE3o0WoRzuxrCnSLv5rz";
+
+function avatar(event) {
+	filepicker.setKey(file_key);
+	event.preventDefault();
+	filepicker.pick(
+	 {
+	    mimetype: 'image/*',
+	    container: 'modal',
+	    services: ['COMPUTER', 'URL']
+	  },
+	  function(Blob){
+	    $("#profile-img").attr('src', Blob.url);
+	    $("#hidden_input_avatar").val(Blob.url);
+	  },
+	  function(FPError){
+
+	  }
+	);
+
+}
+
+
+function files(event) {
+	event.preventDefault();
+	filepicker.setKey(file_key);
+	filepicker.pickMultiple(
+	  {
+	  	mimetype: ['image/*', 'text/*'],
+	    maxFiles: 3
+	  },
+	  function(Blobs){
+	  	var my_blobs = [];
+	  	for(var i = 0; i < Blobs.length; i++) {
+	  		my_blobs.push(Blobs[i].url);
+	  		$("#hidden_input_files").val(my_blobs);
+	  		$( "#my_form" ).append( '<p><span class="glyphicon glyphicon-file"></span> ' + Blobs[i].filename + '</p>' );
+	  	}
+	  },
+	  function(error){
+	  }
+
+	);
+}
+</script>
